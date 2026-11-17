@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/feature/Onboarding/onboarding_screen1.dart';
+import 'package:todo_app/feature/Onboarding/ui/onboarding_screen1.dart';
+import 'package:todo_app/feature/Onboarding/ui/onbording_screen2.dart';
+import 'package:todo_app/feature/Onboarding/ui/onbording_screen3.dart';
 
 class TodoApp extends StatelessWidget {
   const TodoApp({super.key});
@@ -8,7 +10,13 @@ class TodoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: OnboardingScreen1(),
+      initialRoute: OnboardingScreen1.routeName,
+      routes: {
+        OnboardingScreen1.routeName: (context) => OnboardingScreen1(),
+        OnbordingScreen2.routeName: (context) =>OnbordingScreen2(),
+        OnbordingScreen3.routeName:(context) => OnbordingScreen3()
+             
+      },
     );
   }
 }
