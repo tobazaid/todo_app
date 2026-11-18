@@ -1,35 +1,27 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/feature/profile/ui/profile_screen.dart';
+import 'package:todo_app/feature/addproject/ui/add_project.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
-  const CustomBottomNavBar({super.key});
+  final Function(int) onTabChanged;
+  const CustomBottomNavBar({super.key, required this.onTabChanged});
 
   @override
-  State<CustomBottomNavBar> createState() =>
-      _CustomBottomNavBarState();
+  State<CustomBottomNavBar> createState() => _CustomBottomNavBarState();
 }
 
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   int selectedIndex = 0;
-
   final Color purpleColor = const Color(0xFF6D3EF0);
 
-  final List<Widget> screens = [
-    const Center(child: Text("Home Screen")),
-    const Center(child: Text("Calendar Screen")),
-    const Center(child: Text("Tasks Screen")),
-    const ProfileScreen(),
-  ];
-
   Widget navItem(IconData icon, String title, int index) {
-    bool isSelected = selectedIndex == index;
+    final bool isSelected = selectedIndex == index;
 
     return Expanded(
       child: InkWell(
         onTap: () {
-          setState(() {
-            selectedIndex = index;
-          });
+          setState(() => selectedIndex = index);
+          widget.onTabChanged(index);
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -55,77 +47,77 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: selectedIndex,
-        children: screens,
-      ),
-      bottomNavigationBar: SafeArea(
-        top: false,
-        child: SizedBox(
-          height: 100,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
+    final surface = Theme.of(context).colorScheme.surface;
+
+    return SafeArea(
+      top: false,
+      child: SizedBox(
+        height: 100,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: 76,
+                decoration: BoxDecoration(
+                  color: surface,
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(24),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.08),
+                      blurRadius: 10,
+                      offset: const Offset(0, -3),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    navItem(Icons.home_outlined,
+                        "home".tr(context: context), 0),
+                    navItem(Icons.calendar_month_outlined,
+                        "calendar".tr(context: context), 1),
+                    const SizedBox(width: 65),
+                    navItem(Icons.article_outlined,
+                        "tasks".tr(context: context), 2),
+                    navItem(Icons.person_outline,
+                        "profile".tr(context: context), 3),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Center(
                 child: Container(
-                  height: 76,
+                  width: 56,
+                  height: 56,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(24),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
-                        blurRadius: 10,
-                        offset: const Offset(0, -3),
-                      ),
-                    ],
+                    shape: BoxShape.circle,
+                    color: purpleColor,
+                    border: Border.all(color: surface, width: 3),
                   ),
-                  child: Row(
-                    children: [
-                      navItem(Icons.home_outlined, "Home", 0),
-                      navItem(Icons.calendar_month_outlined, "Calendar", 1),
-                      const SizedBox(width: 65),
-                      navItem(Icons.article_outlined, "Tasks", 2),
-                      navItem(Icons.person_outline, "Profile", 3),
-                    ],
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AddProject(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.add, color: Colors.white, size: 28),
                   ),
                 ),
               ),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: purpleColor,
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 3,
-                      ),
-                    ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.add,
-                        color: Colors.white,
-                        size: 28,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

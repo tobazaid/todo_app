@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "905173506806",
+    "project_id": "todoapp-24bc6",
+    "storage_bucket": "todoapp-24bc6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905173506806:android:435d47d31abbcb9a5b2ad7",
+        "android_client_info": {
+          "package_name": "com.example.todo_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCT6ZTA6uvnzv0os_yIrkMpzRZZJQUn4nw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

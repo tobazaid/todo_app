@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/core/app_text_style.dart';
 
@@ -17,7 +18,7 @@ class LogoutItem extends StatelessWidget {
         const SizedBox(width: 5),
 
         Text(
-          "LOg Out",
+          "log_out".tr(),
           style: AppTextStyle.bold16.copyWith(
             color: Colors.red,
           ),

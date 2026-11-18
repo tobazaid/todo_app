@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/core/app_color.dart';
 import 'package:todo_app/core/app_text_style.dart';
@@ -26,7 +27,7 @@ class LanguageItem extends StatelessWidget {
         const SizedBox(width: 5),
 
         Text(
-          "Language",
+          "language".tr(),
           style: AppTextStyle.bold16,
         ),
 

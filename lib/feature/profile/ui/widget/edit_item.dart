@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/core/app_color.dart';
 import 'package:todo_app/core/app_text_style.dart';
@@ -17,7 +18,7 @@ class EditProfileItem extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          "Edit Profile",
+          "edit_profile".tr(),
           style: AppTextStyle.bold16,
         ),
         const Spacer(),
@@ -48,7 +49,7 @@ class DarkModeItem extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          "Dark Mode",
+          "dark_mode".tr(),
           style: AppTextStyle.bold16,
         ),
         const Spacer(),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/core/app_text_style.dart';
 
@@ -10,7 +11,7 @@ class ProfileHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "Profile",
+          "profile".tr(),
           style: AppTextStyle.extraBold28,
         ),
         IconButton(
