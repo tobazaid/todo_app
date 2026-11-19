@@ -7,6 +7,7 @@ import 'package:todo_app/feature/Onboarding/ui/onbording_screen2.dart';
 import 'package:todo_app/feature/Onboarding/ui/onbording_screen3.dart';
 import 'package:todo_app/feature/Onboarding/ui/onbording_screen4.dart';
 import 'package:todo_app/feature/home/ui/home_screen.dart';
+import 'package:todo_app/feature/todaytask/ui/to_day_task.dart';
 
 class TodoApp extends StatelessWidget {
   const TodoApp({super.key});
@@ -34,6 +35,7 @@ class TodoApp extends StatelessWidget {
             OnbordingScreen3.routeName: (context) => OnbordingScreen3(),
             OnbordingScreen4.routeName: (context) => OnbordingScreen4(),
             HomeScreen.routeName: (context) => HomeScreen(),
+            ToDayTask.routeName:(context) => ToDayTask()
           },
         );
       },

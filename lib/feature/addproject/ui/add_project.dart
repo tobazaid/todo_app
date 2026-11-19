@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/core/app_color.dart';
 import 'package:todo_app/core/app_text_style.dart';
@@ -29,6 +30,12 @@ class _AddProjectState extends State<AddProject> {
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime(2035),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context),
+          child: child!,
+        );
+      },
     );
 
     if (pickedDate != null) {
@@ -41,8 +48,8 @@ class _AddProjectState extends State<AddProject> {
   Future<void> addProject() async {
     if (_titleController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter project name'),
+        SnackBar(
+          content: Text('please_enter_project_name'.tr()),
         ),
       );
       return;
@@ -67,8 +74,8 @@ class _AddProjectState extends State<AddProject> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Project added successfully'),
+        SnackBar(
+          content: Text('project_added_successfully'.tr()),
         ),
       );
 
@@ -78,7 +85,7 @@ class _AddProjectState extends State<AddProject> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error: $e'),
+          content: Text('${'error'.tr()}: $e'),
         ),
       );
     } finally {
@@ -99,64 +106,90 @@ class _AddProjectState extends State<AddProject> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
+
+    final textColor = colors.onSurface;
+    final cardColor = theme.cardColor;
+
+    final inputDecoration = InputDecoration(
+      filled: true,
+      fillColor: cardColor,
+      hintStyle: TextStyle(
+        color: colors.onSurfaceVariant,
+      ),
+      contentPadding: const EdgeInsets.all(16),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide.none,
+      ),
+    );
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7FA),
+      backgroundColor: theme.scaffoldBackgroundColor,
+
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: theme.scaffoldBackgroundColor,
+        foregroundColor: textColor,
         elevation: 0,
         centerTitle: true,
+
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: const Icon(
             Icons.arrow_back_ios,
-            color: Colors.black,
             size: 20,
           ),
         ),
+
         title: Text(
-          "Add Project",
+          'add_project'.tr(),
           style: AppTextStyle.bold16.copyWith(
-            color: Colors.black,
+            color: textColor,
           ),
         ),
       ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16),
+
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Project Name",
+
+              // Project Name
+              Text(
+                'project_name'.tr(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
+                  color: textColor,
                 ),
               ),
+
               const SizedBox(height: 8),
 
               TextField(
                 controller: _titleController,
-                decoration: InputDecoration(
-                  hintText: "Enter project name",
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
-                  ),
+                style: TextStyle(color: textColor),
+                decoration: inputDecoration.copyWith(
+                  hintText: 'enter_project_name'.tr(),
                 ),
               ),
 
               const SizedBox(height: 20),
 
-              const Text(
-                "Group",
+              // Group
+              Text(
+                'group'.tr(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
+                  color: textColor,
                 ),
               ),
+
               const SizedBox(height: 8),
 
               Container(
@@ -164,27 +197,35 @@ class _AddProjectState extends State<AddProject> {
                   horizontal: 16,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: cardColor,
                   borderRadius: BorderRadius.circular(16),
                 ),
+
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: selectedGroup,
                     isExpanded: true,
-                    items: const [
+                    dropdownColor: cardColor,
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: 15,
+                    ),
+
+                    items: [
                       DropdownMenuItem(
                         value: 'Work',
-                        child: Text('Work'),
+                        child: Text('work'.tr()),
                       ),
                       DropdownMenuItem(
                         value: 'Personal',
-                        child: Text('Personal'),
+                        child: Text('personal'.tr()),
                       ),
                       DropdownMenuItem(
                         value: 'Study',
-                        child: Text('Study'),
+                        child: Text('study'.tr()),
                       ),
                     ],
+
                     onChanged: (value) {
                       if (value != null) {
                         setState(() {
@@ -198,79 +239,84 @@ class _AddProjectState extends State<AddProject> {
 
               const SizedBox(height: 20),
 
-              const Text(
-                "Due Date",
+              // Due Date
+              Text(
+                'due_date'.tr(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
+                  color: textColor,
                 ),
               ),
+
               const SizedBox(height: 8),
 
               TextField(
                 readOnly: true,
+                style: TextStyle(color: textColor),
                 onTap: selectDate,
-                decoration: InputDecoration(
+
+                decoration: inputDecoration.copyWith(
                   hintText: selectedDate == null
-                      ? "Select date"
+                      ? 'select_date'.tr()
                       : "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}",
-                  prefixIcon: const Icon(
+
+                  prefixIcon: Icon(
                     Icons.calendar_today,
-                    color: Colors.grey,
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
+                    color: colors.primary,
                   ),
                 ),
               ),
 
               const SizedBox(height: 20),
 
-              const Text(
-                "Description",
+              // Description
+              Text(
+                'description'.tr(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
+                  color: textColor,
                 ),
               ),
+
               const SizedBox(height: 8),
 
               TextField(
                 controller: _descriptionController,
                 maxLines: 4,
-                decoration: InputDecoration(
-                  hintText: "Enter project description",
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
-                  ),
+                style: TextStyle(color: textColor),
+
+                decoration: inputDecoration.copyWith(
+                  hintText: 'enter_project_description'.tr(),
+                  alignLabelWithHint: true,
                 ),
               ),
 
               const SizedBox(height: 30),
 
+              // Add Button
               SizedBox(
                 width: double.infinity,
                 height: 55,
+
                 child: ElevatedButton(
                   onPressed: isLoading ? null : addProject,
+
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColor.main,
+                    foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
+
                   child: isLoading
                       ? const CircularProgressIndicator(
                           color: Colors.white,
                         )
                       : Text(
-                          "Add Project",
+                          'add_project'.tr(),
                           style: AppTextStyle.bold16.copyWith(
                             color: Colors.white,
                           ),
